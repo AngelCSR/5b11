@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios Arrays con DOM (Básico)</title>
+</head>
+<body>
+
+    <h1>Ejercicios de Arrays con DOM (Básico)</h1>
+
+    <section>
+        <h2>Ejercicio 1: Manipulación Básica de Categorías</h2>
+        <div id="resultadoEjercicio1">
+            <p>Array original: <span id="originalCategorias"></span></p>
+            <p>Después de agregar al final: <span id="agregarFinalCategorias"></span></p>
+            <p>Después de eliminar el primero: <span id="eliminarPrimeroCategorias"></span></p>
+            <p>Después de agregar al inicio: <span id="agregarInicioCategorias"></span></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ejercicio 2: Filtrado y Transformación de Películas</h2>
+        <div id="resultadoEjercicio2">
+            <p>Array original de películas: <span id="originalPeliculas"></span></p>
+            <p>Películas estrenadas después de 2022: <span id="peliculasRecientes"></span></p>
+            <p>Años de estreno multiplicados por 2: <span id="añosDobles"></span></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Ejercicio 3: Búsqueda de Película por Nombre</h2>
+        <div id="resultadoEjercicio3">
+            <p>Array de películas para búsqueda: <span id="peliculasBusqueda"></span></p>
+            <p>Película encontrada con el nombre 'Barbie': <span id="barbiePelicula"></span></p>
+        </div>
+    </section>
+
+    <script>
+        // Función para mostrar un array como una cadena simple
+        function mostrarArrayBasico(array) {
+            return array.join(", ");
+        }
+
+        // Función para mostrar un array de objetos como una cadena simple
+        function mostrarArrayObjetosBasico(array) {
+            let resultado = "";
+            for (let i = 0; i < array.length; i++) {
+                let objeto = array[i];
+                let propiedades = [];
+                for (const key in objeto) {
+                    if (objeto.hasOwnProperty(key)) {
+                        propiedades.push(`${key}: ${objeto[key]}`);
+                    }
+                }
+                resultado += `{${propiedades.join(", ")}}`;
+                if (i < array.length - 1) {
+                    resultado += ", ";
+                }
+            }
+            return resultado;
+        }
+
+        // Ejercicio 1: Manipulación Básica con Categorías de Película
+        let categoriasPelicula = ["accion", "suspense", "comedia", "amor", "terror"];
+        document.getElementById("originalCategorias").innerHTML = mostrarArrayBasico(categoriasPelicula);
+
+        categoriasPelicula.push("ciencia ficción");
+        document.getElementById("agregarFinalCategorias").innerHTML = mostrarArrayBasico(categoriasPelicula);
+
+        categoriasPelicula.shift();
+        document.getElementById("eliminarPrimeroCategorias").innerHTML = mostrarArrayBasico(categoriasPelicula);
+
+        categoriasPelicula.unshift("documental");
+        document.getElementById("agregarInicioCategorias").innerHTML = mostrarArrayBasico(categoriasPelicula);
+
+        // Ejercicio 2: Filtrado y Transformación con Películas
+        let peliculas = [
+            { nombre: "Oppenheimer", año: 2023 },
+            { nombre: "Barbie", año: 2023 },
+            { nombre: "Spider-Man: Cruzando el Multiverso", año: 2023 },
+            { nombre: "Dune: Parte Dos", año: 2024 },
+            { nombre: "Los Juegos del Hambre: Balada de Pájaros Cantores y Serpientes", año: 2023 }
+        ];
+        document.getElementById("originalPeliculas").innerHTML = mostrarArrayObjetosBasico(peliculas);
+
+        let peliculasRecientes = peliculas.filter(pelicula => pelicula.año > 2022);
+        document.getElementById("peliculasRecientes").innerHTML = mostrarArrayObjetosBasico(peliculasRecientes);
+
+        let añosDobles = peliculas.map(pelicula => ({ ...pelicula, año: pelicula.año * 2 }));
+        document.getElementById("añosDobles").innerHTML = mostrarArrayObjetosBasico(añosDobles);
+
+        // Ejercicio 3: Búsqueda de Película por Nombre
+        let peliculasBusqueda = [
+            { nombre: "Oppenheimer", año: 2023 },
+            { nombre: "Barbie", año: 2023 },
+            { nombre: "Spider-Man: Cruzando el Multiverso", año: 2023 },
+            { nombre: "Dune: Parte Dos", año: 2024 },
+            { nombre: "Los Juegos del Hambre: Balada de Pájaros Cantores y Serpientes", año: 2023 }
+        ];
+        document.getElementById("peliculasBusqueda").innerHTML = mostrarArrayObjetosBasico(peliculasBusqueda);
+
+        let barbiePelicula = peliculasBusqueda.find(pelicula => pelicula.nombre === "Barbie");
+        document.getElementById("barbiePelicula").innerHTML = barbiePelicula ? `{nombre: ${barbiePelicula.nombre}, año: ${barbiePelicula.año}}` : "No encontrado";
+    </script>
+
+</body>
+</html>
